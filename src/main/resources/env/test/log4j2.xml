@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <properties>
+        <property name="LOG_HOME">/root/game/apache-tomcat-8.5.4/logs/applogs</property>
+    </properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout charset="UTF-8" pattern="%d{MM-dd HH:mm:ss.SSS} [%-5level] [%class{36}:%L(%M)] - %msg%xEx%n"/>
+        </Console>
+        <RollingRandomAccessFile name="ErrorLog"
+                                 fileName="${LOG_HOME}/app.log"
+                                 filePattern="${LOG_HOME}/app.log.%d{yyyy-MM-dd}.%i.gz">
+            <PatternLayout charset="UTF-8" pattern="%d{MM-dd HH:mm:ss.SSS} [%-5level] [%class{36}:%L(%M)] - %msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </appenders>
+
+
+    <loggers>
+        <logger name="mobi.birdgame.wx" level="debug" additivity="false">
+            <!--<appender-ref ref="Console" />-->
+            <appender-ref ref="ErrorLog" />
+        </logger>
+        <logger name="org.apache.http" level="debug" additivity="false">
+            <!--<appender-ref ref="Console" />-->
+            <appender-ref ref="ErrorLog" />
+        </logger>
+        <logger name="com.mysql.jdbc" level="debug" additivity="false">
+            <!--<appender-ref ref="Console" />-->
+            <appender-ref ref="ErrorLog" />
+        </logger>
+        <logger name="org.mybatis" level="debug" additivity="false">
+            <!--<appender-ref ref="Console" />-->
+            <appender-ref ref="ErrorLog" />
+        </logger>
+        <root level="info">
+            <!--<appender-ref ref="Console" />-->
+            <appender-ref ref="ErrorLog" />
+        </root>
+    </loggers>
+</configuration>

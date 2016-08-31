@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 請將常規的MVC相關定義在此文件 -->
+
+    <context:component-scan base-package="com.lyzw.springdemo"/>
+
+    <mvc:default-servlet-handler/>
+
+    <!--处理静态资源-->
+    <mvc:resources mapping="css/*" location="css" />
+    <mvc:resources mapping="fonts/*" location="fonts" />
+    <mvc:resources mapping="img/*" location="img" />
+    <mvc:resources mapping="js/*" location="js" />
+
+
+    <!--处理输出为Json格式的时候-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <!--<value>text/html;charset=UTF-8</value>-->
+                    </list>
+                </property>
+                <property name="features">
+                    <list>
+                        <value>QuoteFieldNames</value>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteNullNumberAsZero</value>
+                        <value>WriteNullListAsEmpty</value>
+                        <value>WriteNullStringAsEmpty</value>
+                        <value>WriteNullBooleanAsFalse</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--JSP + Freemarker视图解释器整合-->
+    <!--在JSP和Freemarker的配置项,freemarker的order设置为0，jsp为1,找view时，先找ftl文件，再找jsp文件做为视图-->
+    <!--JSP视图解析器-->
+    <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+        <property name="order" value="1"/>
+    </bean>
+</beans>

@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--  加载properties文件  -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:common/common.properties</value>
+                <value>classpath:config.properties</value>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!--  spring mvc 配置信息  -->
+    <import resource="classpath*:common/spring/applicationContext-mvc.xml"/>
+    <!--  spring quartz 配置信息  -->
+    <import resource="classpath*:common/spring/applicationContext-quartz.xml"/>
+    <!--  spring bean 配置信息  -->
+    <import resource="classpath*:common/spring/applicationContext-bean.xml"/>
+    <!--  spring db 配置信息  -->
+    <import resource="classpath*:common/spring/applicationContext-db.xml"/>
+
+    <!-- 启用@AspectJ支持 -->
+    <aop:aspectj-autoproxy/>
+</beans>

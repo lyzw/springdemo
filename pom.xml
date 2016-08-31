@@ -1,0 +1,244 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lyzw</groupId>
+	<artifactId>springdemo</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>springdemo Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<spring.version>4.3.0.RELEASE</spring.version>
+		<httpclient.version>4.5.2</httpclient.version>
+		<log4j.version>2.6.2</log4j.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<mysql.version>5.1.39</mysql.version>
+        <!--  fastjson 版本   -->
+        <fastjson.version>1.2.15</fastjson.version>
+	</properties>
+
+	<dependencies>
+		<!-- test dependencies begin -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- test dependencies end -->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- spring dependency end -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+		
+		<!-- log dependencies begin -->
+		<!--日志框架-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- log4j1到log4j2转接桥，如果引用的其他包使用的是log4j，那么可以引入此包 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-ext</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        
+        <!-- 数据库配置 -->
+        <!--  mysql包  -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+
+        <!--Json依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!--Json依赖-->
+
+        <!--servlet 依赖，启用web3.0-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+	</dependencies>
+	
+	<profiles>
+        <profile>
+            <!--本地编译器开发环境maven配置-->
+            <id>dev</id>
+            <properties>
+                <!--资源目录dev文件夹下文件-->
+                <env>dev</env>
+            </properties>
+            <activation>
+                <!--默认打包设置-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!--测试环境maven配置-->
+            <id>test</id>
+            <properties>
+                <!--资源目录test文件夹下文件-->
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <!--集成测试环境maven配置-->
+            <id>sit</id>
+            <properties>
+                <!--资源目录sit文件夹下文件-->
+                <env>sit</env>
+            </properties>
+        </profile>
+        <profile>
+            <!--预演环境maven配置-->
+            <id>pre</id>
+            <properties>
+                <!--资源目录pre文件夹下文件-->
+                <env>pre</env>
+            </properties>
+        </profile>
+        <profile>
+            <!--生产环境maven配置-->
+            <id>prod</id>
+            <properties>
+                <!--资源目录prod文件夹下文件-->
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+    
+	<build>
+		<finalName>springdemo</finalName>
+        <plugins>
+            <!-- jetty配置 -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.3.11.v20160721</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8080</port>
+                        <idleTimeout>60000</idleTimeout>
+                    </httpConnector>
+                    <stopPort>9966</stopPort>
+                    <stopKey>foo</stopKey>
+                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+
+        </plugins>
+		<!-- 资源文件设置及过滤 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--  资源根目录排除各环境的配置，使用单独的资源目录来指定  -->
+                <excludes>
+                    <exclude>env/dev/*</exclude>
+                    <exclude>env/test/*</exclude>
+                    <exclude>env/sit/*</exclude>
+                    <exclude>env/pre/*</exclude>
+                    <exclude>env/prod/*</exclude>
+                    <!--<exclude>mvntools/*</exclude>-->
+                </excludes>
+            </resource>
+            <resource>
+                <!-- 分生产环境资源 -->
+                <directory>src/main/resources/env/${env}</directory>
+            </resource>
+        </resources>
+	</build>
+</project>
