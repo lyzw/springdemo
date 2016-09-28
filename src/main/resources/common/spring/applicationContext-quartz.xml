@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+    <!-- 請將常規的定时任务相關定義在此文件 -->
+
+    <!-- quartz配置  动态配置所以我们将 Factory 作为一个service一样的接口 QuartzJobFactory.java-->
+    <!-- 调度工厂 -->
+    <bean id="taskJob" class="mobi.birdgame.mgmt.quartz.NoticeManageTask"/>
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="group" value="notice"/>
+        <property name="name" value="notice_quartz"/>
+        <!--false表示等上一个任务执行完后再开启新的任务-->
+        <!--<property name="concurrent" value="false"/>-->
+        <property name="targetObject">
+            <ref bean="taskJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>execute</value>
+        </property>
+    </bean>
+    <!--  调度触发器 -->
+    <bean id="myTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="name" value="work_default_name"/>
+        <property name="group" value="work_default"/>
+        <property name="jobDetail">
+            <ref bean="jobDetail" />
+        </property>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="repeatInterval" value="60000"/>
+    </bean>
+    <!-- 调度工厂 -->
+    <bean lazy-init="false"  autowire="no"  id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+               <!-- <ref bean="myTrigger"/>-->
+                <ref bean="simpleTrigger"/>
+            </list>
+        </property>
+    </bean></beans>
