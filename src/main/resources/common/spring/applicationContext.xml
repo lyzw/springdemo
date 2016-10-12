@@ -14,9 +14,9 @@
     <!--  spring mvc 配置信息  -->
     <import resource="classpath*:common/spring/applicationContext-mvc.xml"/>
     <!--  spring quartz 配置信息  -->
-    <import resource="classpath*:common/spring/applicationContext-quartz.xml"/>
+    <!--<import resource="classpath*:common/spring/applicationContext-quartz.xml"/>-->
     <!--  spring bean 配置信息  -->
-    <import resource="classpath*:common/spring/applicationContext-bean.xml"/>
+    <import resource="classpath*:common/spring/applicationContext-beans.xml"/>
     <!--  spring db 配置信息  -->
     <import resource="classpath*:common/spring/applicationContext-db.xml"/>
 
